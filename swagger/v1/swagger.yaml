@@ -1,0 +1,979 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/categories":
+    get:
+      summary: List category
+      tags:
+      - Category
+      responses:
+        '200':
+          description: Successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '401':
+          description: Unauthorized
+    post:
+      summary: Create category
+      tags:
+      - Category
+      parameters: []
+      responses:
+        '201':
+          description: Successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+  "/api/categories/{id}":
+    get:
+      summary: Show category
+      tags:
+      - Category
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '404':
+          description: Not Found
+    delete:
+      summary: Delete category
+      tags:
+      - Category
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+    patch:
+      summary: Update category
+      tags:
+      - Category
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+  "/api/invitations":
+    get:
+      summary: List invitations
+      tags:
+      - Invitation
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  id:
+                    type: integer
+                  sender_id:
+                    type: integer
+                  receiver_id:
+                    type: integer
+                  status:
+                    type: string
+                    enum:
+                    - waiting
+                    - rejected
+                    - accepted
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+    post:
+      summary: Create invitation
+      tags:
+      - Invitation
+      parameters: []
+      responses:
+        '201':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  sender_id:
+                    type: integer
+                  receiver_id:
+                    type: integer
+                  status:
+                    type: string
+                    enum:
+                    - waiting
+                    - rejected
+                    - accepted
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                receiver_id:
+                  type: integer
+              required:
+              - receiver_id
+  "/api/invitations/{id}":
+    get:
+      summary: Show invitation
+      tags:
+      - Invitation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  sender_id:
+                    type: integer
+                  receiver_id:
+                    type: integer
+                  status:
+                    type: string
+                    enum:
+                    - waiting
+                    - rejected
+                    - accepted
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '404':
+          description: Not Found
+    delete:
+      summary: Delete invitation
+      tags:
+      - Invitation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+  "/api/invitations/{id}/accept":
+    patch:
+      summary: Accept invitation
+      tags:
+      - Invitation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  sender_id:
+                    type: integer
+                  receiver_id:
+                    type: integer
+                  status:
+                    type: string
+                    enum:
+                    - waiting
+                    - rejected
+                    - accepted
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '404':
+          description: Not Found
+  "/api/invitations/{id}/reject":
+    patch:
+      summary: Reject invitation
+      tags:
+      - Invitation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  sender_id:
+                    type: integer
+                  receiver_id:
+                    type: integer
+                  status:
+                    type: string
+                    enum:
+                    - waiting
+                    - rejected
+                    - accepted
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '404':
+          description: Not Found
+  "/api/invitations/users":
+    get:
+      summary: List User
+      tags:
+      - Invitation
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  id:
+                    type: integer
+                  sender_id:
+                    type: integer
+                  receiver_id:
+                    type: integer
+                  status:
+                    type: string
+                    enum:
+                    - waiting
+                    - rejected
+                    - accepted
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+  "/api/register":
+    post:
+      summary: Register User
+      tags:
+      - User
+      parameters: []
+      responses:
+        '201':
+          description: Successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      email:
+                        type: string
+                      full_name:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+        '422':
+          description: Unprocessable Entity.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                full_name:
+                  type: string
+              required:
+              - email
+              - password
+              - full_name
+  "/api/login":
+    post:
+      summary: Login user
+      tags:
+      - User
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: password
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  full_name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '401':
+          description: Login failed.
+  "/api/logout":
+    delete:
+      summary: Logout user
+      tags:
+      - User
+      responses:
+        '204':
+          description: Successfully.
+  "/api/categories/{category_id}/tasks":
+    get:
+      summary: list task
+      tags:
+      - Task
+      parameters:
+      - name: category_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  priority:
+                    type: string
+                  start_at:
+                    type: string
+                  end_at:
+                    type: string
+                  schedule_type:
+                    type: string
+                  author_id:
+                    type: integer
+                  assignee_id:
+                    type: integer
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  priority:
+                    type: string
+                  start_at:
+                    type: string
+                  end_at:
+                    type: string
+                  schedule_type:
+                    type: string
+                  author_id:
+                    type: integer
+                  assignee_id:
+                    type: integer
+  "/api/tasks/":
+    post:
+      summary: create task
+      tags:
+      - Task
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  priority:
+                    type: string
+                  start_at:
+                    type: string
+                  end_at:
+                    type: string
+                  schedule_type:
+                    type: string
+                  author_id:
+                    type: integer
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  priority:
+                    type: string
+                  start_at:
+                    type: string
+                  end_at:
+                    type: string
+                  schedule_type:
+                    type: string
+                  author_id:
+                    type: integer
+                  assignee_id:
+                    type: integer
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  priority:
+                    type: string
+                  start_at:
+                    type: string
+                  end_at:
+                    type: string
+                  schedule_type:
+                    type: string
+                  author_id:
+                    type: integer
+                  assignee_id:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                category_id:
+                  type: integer
+                start_at:
+                  type: string
+                end_at:
+                  type: string
+                deadline_at:
+                  type: string
+  "/api/tasks/{id}":
+    get:
+      summary: show task
+      tags:
+      - Task
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  priority:
+                    type: string
+                  start_at:
+                    type: string
+                  end_at:
+                    type: string
+                  schedule_type:
+                    type: string
+                  author_id:
+                    type: integer
+        '404':
+          description: Not Found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  priority:
+                    type: string
+                  start_at:
+                    type: string
+                  end_at:
+                    type: string
+                  schedule_type:
+                    type: string
+                  author_id:
+                    type: integer
+                  assignee_id:
+                    type: integer
+    delete:
+      summary: Delete task
+      tags:
+      - Task
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: No Content
+    patch:
+      summary: update task
+      tags:
+      - Task
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  priority:
+                    type: string
+                  start_at:
+                    type: string
+                  end_at:
+                    type: string
+                  schedule_type:
+                    type: string
+                  author_id:
+                    type: integer
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  priority:
+                    type: string
+                  start_at:
+                    type: string
+                  end_at:
+                    type: string
+                  schedule_type:
+                    type: string
+                  author_id:
+                    type: integer
+                  assignee_id:
+                    type: integer
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  priority:
+                    type: string
+                  start_at:
+                    type: string
+                  end_at:
+                    type: string
+                  schedule_type:
+                    type: string
+                  author_id:
+                    type: integer
+                  assignee_id:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                category_id:
+                  type: integer
+                start_at:
+                  type: string
+                end_at:
+                  type: string
+                deadline_at:
+                  type: string
+  "/api/tasks/{id}/update_assignee":
+    patch:
+      summary: update assignee_id task
+      tags:
+      - Task
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  priority:
+                    type: string
+                  author_id:
+                    type: integer
+                  assignee_id:
+                    type: integer
+                  updated_at:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  priority:
+                    type: string
+                  author_id:
+                    type: integer
+                  assignee_id:
+                    type: integer
+                  updated_at:
+                    type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  category_id:
+                    type: integer
+                  title:
+                    type: string
+                  status:
+                    type: boolean
+                  deadline_at:
+                    type: string
+                  created_at:
+                    type: string
+                  priority:
+                    type: string
+                  author_id:
+                    type: integer
+                  assignee_id:
+                    type: integer
+                  updated_at:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                assignee_id:
+                  type: integer
+              required:
+              - assignee_id
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
